@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { db } from "~/server/db";
 
 const mockUrls = [
   "https://img.freepik.com/free-psd/technology-template-design_23-2150658252.jpg?w=2000&t=st=1713565592~exp=1713566192~hmac=c28398d967b1129300e0025c6193d6ce79582ec81b05a0a415ce744ac0c54251",
@@ -14,13 +15,21 @@ const mockImages = mockUrls.map((url, index) => {
     }
 });
 
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await db.query.posts.findMany();
+  console.log(posts);
+  
   return (
     <main className="">
       <div className="flex flex-wrap gap-4">
+        {posts.map((post) => (
+          <div key={post.id} className="w-48">
+            {post.name}
+          </div>
+        ))}
         {
-          [...mockImages, ...mockImages, ...mockImages].map((image) => (
-            <div key={image.id} className="w-48">
+          [...mockImages, ...mockImages, ...mockImages].map((image, index) => (
+            <div key={image.id +"-"+ index} className="w-48">
               <img src={image.url} alt="image" />
             </div>
           ))
