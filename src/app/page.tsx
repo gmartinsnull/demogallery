@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { db } from "~/server/db";
 
+export const dynamic = "force-dynamic";
+
 const mockUrls = [
   "https://img.freepik.com/free-psd/technology-template-design_23-2150658252.jpg?w=2000&t=st=1713565592~exp=1713566192~hmac=c28398d967b1129300e0025c6193d6ce79582ec81b05a0a415ce744ac0c54251",
   "https://img.freepik.com/free-psd/influencer-youtube-thumbnail-template-design_23-2149586166.jpg?w=2000&t=st=1713565642~exp=1713566242~hmac=473ffb0f19c1ba95a3cccd0b18bbfd5cfd065eba7e39ee9906e859da5cc0beae",
