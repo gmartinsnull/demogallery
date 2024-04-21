@@ -11,14 +11,16 @@ async function Images() {
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {posts.map((image, index) => (
-        <div key={image.id +"-"+ index} className="w-48 h-48 flex flex-col">
-          <Image 
-            src={image.url} 
-            style={{ objectFit: "contain" }}
-            alt={image.name} 
-            width={200} 
-            height={200} 
-          />
+        <div key={image.id + "-" + index} className="flex h-48 w-48 flex-col">
+          <Link href={`/photos/${image.id}`}>
+            <Image
+              src={image.url}
+              style={{ objectFit: "contain" }}
+              alt={image.name}
+              width={200}
+              height={200}
+            />
+          </Link>
           <div>{image.name}</div>
         </div>
       ))}
@@ -29,7 +31,9 @@ export default async function HomePage() {
   return (
     <main className="">
       <SignedOut>
-        <div className="h-full w-full text-2xl text-center">Please sign in to view this page</div>
+        <div className="h-full w-full text-center text-2xl">
+          Please sign in to view this page
+        </div>
       </SignedOut>
       <SignedIn>
         <Images />
