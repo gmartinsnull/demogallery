@@ -1,3 +1,6 @@
+"use client";
+import { toast } from "sonner";
+
 function UploadSVG() {
   return (
     <svg
@@ -17,11 +20,24 @@ function UploadSVG() {
   );
 }
 
+function uploadButtonClick() {
+  toast("toast triggered", {
+    duration: 5000,
+  });
+}
+
 export function SimpleUploadButton() {
   return (
     <div>
-      <label htmlFor="upload-button" className="cursor-pointer"><UploadSVG /></label>
-      <input id="upload-button" type="file" className="sr-only" />
+      <label htmlFor="upload-button" className="cursor-pointer">
+        <UploadSVG />
+      </label>
+      <input
+        id="upload-button"
+        type="file"
+        className="sr-only"
+        onClick={uploadButtonClick}
+      />
     </div>
   );
 }
