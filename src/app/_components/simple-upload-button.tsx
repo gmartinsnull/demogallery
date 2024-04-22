@@ -1,4 +1,5 @@
 "use client";
+import { usePostHog } from "posthog-js/react";
 import { toast } from "sonner";
 
 function UploadSVG() {
@@ -27,6 +28,8 @@ function uploadButtonClick() {
 }
 
 export function SimpleUploadButton() {
+  const posthog = usePostHog();
+  posthog.capture("upload_button_click");
   return (
     <div>
       <label htmlFor="upload-button" className="cursor-pointer">
