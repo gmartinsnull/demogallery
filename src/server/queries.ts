@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { posts } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { analyticsServerClient } from "./analytics";
 
 export async function getImages() {
   const posts = await db.query.posts.findMany({
@@ -31,6 +32,14 @@ export async function deleteImage(id: number) {
   if (!user.userId) throw new Error("Unauthorized");
 
   await db.delete(posts).where(eq(posts.id, id));
+
+  analyticsServerClient.capture({
+    distinctId: user.userId,
+    event: "delete_image",
+    properties: {
+      postId: id,
+    },
+  });
 
   redirect("/");
 }
