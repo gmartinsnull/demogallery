@@ -5,6 +5,8 @@ import { posts } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { analyticsServerClient } from "./analytics";
+import { ratelimit } from "./ratelimit";
+import posthog from "posthog-js";
 
 export async function getImages() {
   const posts = await db.query.posts.findMany({
@@ -23,6 +25,12 @@ export async function getImage(id: number) {
   if (!post) throw new Error("Post not found");
 
   // if (post.userId !== user.userId) throw new Error("Unauthorized");
+  const { success } = await ratelimit.limit(user.userId);
+  if (!success) {
+    posthog.capture("refresh_post_failed");
+    // toast.error("Refresh post failed");
+    throw new Error("Ratelimited");
+  }
 
   return post;
 }
