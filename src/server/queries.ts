@@ -28,7 +28,6 @@ export async function getImage(id: number) {
   const { success } = await ratelimit.limit(user.userId);
   if (!success) {
     posthog.capture("refresh_post_failed");
-    // toast.error("Refresh post failed");
     throw new Error("Ratelimited");
   }
 
